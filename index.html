@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Web for Bakery Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        prefix: 'tw-',
+        corePlugins: { preflight: false },
+        theme: {
+          extend: {
+            colors: {
+              cake: { pink: '#e8567f', gold: '#d4a041', dark: '#1a1a2e', cream: '#fff8f0' }
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-content">
+            <div class="loader-cake">
+                <div class="cake-layer layer-1"></div>
+                <div class="cake-layer layer-2"></div>
+                <div class="cake-layer layer-3"></div>
+                <div class="candle"></div>
+                <div class="flame"></div>
+            </div>
+            <p class="loader-text">Baking Something Special...</p>
+            <div class="loader-bar">
+                <div class="loader-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">🎂</span>
+                <span class="logo-text">Demo <span class="accent">Bakery Shop</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#cakes" class="nav-link">Cakes</a></li>
+                <li><a href="#gallery360" class="nav-link">360° View</a></li>
+                <li><a href="#customize" class="nav-link">Customize</a></li>
+                <li><a href="#about" class="nav-link">Our Story</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#reviews" class="nav-link">Reviews</a></li>
+                <li><a href="#order" class="nav-link order-btn">Order Now</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#cakes">Cakes</a></li>
+            <li><a href="#gallery360">360° View</a></li>
+            <li><a href="#customize">Customize</a></li>
+            <li><a href="#about">Our Story</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#order" class="mobile-order-btn">Order Now</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-particles" id="particles"></div>
+        <div class="hero-split">
+            <!-- Left: Text Content -->
+            <div class="hero-content">
+                <div class="hero-badge" data-animate="fade-down">✨ Premium Artisan Bakery</div>
+                <h1 class="hero-title" data-animate="fade-up">
+                    <span class="line">Demo Web</span>
+                    <span class="line accent-line">Bakery Shop</span>
+                </h1>
+                <p class="hero-subtitle" data-animate="fade-up" data-delay="0.2">Fresh Cakes Made With Love</p>
+                <p class="hero-description" data-animate="fade-up" data-delay="0.4">Handcrafted premium cakes for every celebration. Experience the art of baking with our exquisite collection.</p>
+                <div class="hero-buttons" data-animate="fade-up" data-delay="0.6">
+                    <a href="#cakes" class="btn btn-primary">
+                        <span>View Cakes</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="#order" class="btn btn-secondary">
+                        <span>Order Now</span>
+                    </a>
+                </div>
+                <div class="hero-stats" data-animate="fade-up" data-delay="0.8">
+                    <div class="stat">
+                        <span class="stat-number" data-count="500">0</span><span class="stat-plus">+</span>
+                        <span class="stat-label">Happy Customers</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-number" data-count="50">0</span><span class="stat-plus">+</span>
+                        <span class="stat-label">Cake Varieties</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat">
+                        <span class="stat-number" data-count="5">0</span>
+                        <span class="stat-label">Years of Love</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Three.js 3D Cake in Rectangular Frame -->
+            <div class="hero-cake-360" data-animate="fade-up" data-delay="0.3">
+                <div class="cake-3d-frame hero-frame">
+                    <div class="frame-glow"></div>
+                    <canvas id="heroCakeCanvas"></canvas>
+                    <div class="frame-label">
+                        <span class="frame-label-dot"></span>
+                        3D Interactive &bull; Drag to Rotate
+                    </div>
+                </div>
+                <!-- Cake flavor pills -->
+                <div class="tw-flex tw-justify-center tw-gap-2 tw-mt-6 tw-flex-wrap" id="heroCakeSelector">
+                    <button class="hero-cake-pill tw-active tw-px-4 tw-py-2 tw-rounded-full tw-text-xs tw-font-medium tw-border tw-border-white/20 tw-bg-white/10 tw-text-white tw-backdrop-blur-sm tw-cursor-pointer tw-transition-all hover:tw-bg-cake-pink/30 hover:tw-border-cake-pink/50" data-cake="chocolate" style="font-family:'Poppins',sans-serif">🍫 Chocolate</button>
+                    <button class="hero-cake-pill tw-px-4 tw-py-2 tw-rounded-full tw-text-xs tw-font-medium tw-border tw-border-white/20 tw-bg-white/10 tw-text-white tw-backdrop-blur-sm tw-cursor-pointer tw-transition-all hover:tw-bg-cake-pink/30 hover:tw-border-cake-pink/50" data-cake="redvelvet" style="font-family:'Poppins',sans-serif">❤️ Red Velvet</button>
+                    <button class="hero-cake-pill tw-px-4 tw-py-2 tw-rounded-full tw-text-xs tw-font-medium tw-border tw-border-white/20 tw-bg-white/10 tw-text-white tw-backdrop-blur-sm tw-cursor-pointer tw-transition-all hover:tw-bg-cake-pink/30 hover:tw-border-cake-pink/50" data-cake="fruit" style="font-family:'Poppins',sans-serif">🍓 Fruit</button>
+                    <button class="hero-cake-pill tw-px-4 tw-py-2 tw-rounded-full tw-text-xs tw-font-medium tw-border tw-border-white/20 tw-bg-white/10 tw-text-white tw-backdrop-blur-sm tw-cursor-pointer tw-transition-all hover:tw-bg-cake-pink/30 hover:tw-border-cake-pink/50" data-cake="birthday" style="font-family:'Poppins',sans-serif">🎂 Birthday</button>
+                    <button class="hero-cake-pill tw-px-4 tw-py-2 tw-rounded-full tw-text-xs tw-font-medium tw-border tw-border-white/20 tw-bg-white/10 tw-text-white tw-backdrop-blur-sm tw-cursor-pointer tw-transition-all hover:tw-bg-cake-pink/30 hover:tw-border-cake-pink/50" data-cake="wedding" style="font-family:'Poppins',sans-serif">💍 Wedding</button>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <p>Scroll to explore</p>
+        </div>
+    </section>
+
+    <!-- Interactive Cake Showcase -->
+    <section id="cakes" class="cake-showcase">
+        <div class="section-header">
+            <span class="section-tag">Our Specialties</span>
+            <h2 class="section-title">Exquisite Cake Collection</h2>
+            <p class="section-desc">Each cake is a masterpiece, handcrafted with premium ingredients and decorated with love.</p>
+        </div>
+
+        <div class="showcase-container">
+            <!-- Cake 1 -->
+            <div class="cake-panel" data-cake="chocolate">
+                <div class="cake-visual">
+                    <div class="cake-video-wrap">
+                        <video class="cake-vid" autoplay muted loop playsinline disablepictureinpicture controlsList="nodownload nofullscreen noremoteplayback">
+                            <source src="images/Chocolate%20Truffle%20Cake/Flow_delpmaspu_.mp4" type="video/mp4">
+                        </video>
+                        <div class="vid-shield"></div>
+                    </div>
+                    <div class="cake-glow"></div>
+                </div>
+                <div class="cake-info">
+                    <div class="cake-badge">Bestseller 🔥</div>
+                    <h3 class="cake-name">Chocolate Truffle Cake</h3>
+                    <div class="cake-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-count">(128 reviews)</span>
+                    </div>
+                    <p class="cake-desc">Rich, indulgent chocolate truffle cake layered with silky ganache and topped with Belgian chocolate shavings.</p>
+                    <div class="cake-details">
+                        <div class="detail">
+                            <span class="detail-label">Weight</span>
+                            <span class="detail-value">1 Kg</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Serves</span>
+                            <span class="detail-value">8-10</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Type</span>
+                            <span class="detail-value">Eggless</span>
+                        </div>
+                    </div>
+                    <div class="cake-price">
+                        <span class="price">₹699</span>
+                        <span class="price-old">₹899</span>
+                    </div>
+                    <div class="cake-actions">
+                        <a href="#order" class="btn btn-primary btn-sm">Order Now</a>
+                        <button class="btn btn-outline btn-sm btn-360">View 360°</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cake 2 -->
+            <div class="cake-panel reverse" data-cake="redvelvet">
+                <div class="cake-visual">
+                    <div class="cake-video-wrap">
+                        <video class="cake-vid" autoplay muted loop playsinline disablepictureinpicture controlsList="nodownload nofullscreen noremoteplayback">
+                            <source src="images/Red%20Velvet%20Dream/Red_velvet_cake_with_frosting_806ddb5839.mp4" type="video/mp4">
+                        </video>
+                        <div class="vid-shield"></div>
+                    </div>
+                    <div class="cake-glow red-glow"></div>
+                </div>
+                <div class="cake-info">
+                    <div class="cake-badge pink">Popular 💖</div>
+                    <h3 class="cake-name">Red Velvet Dream</h3>
+                    <div class="cake-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-count">(96 reviews)</span>
+                    </div>
+                    <p class="cake-desc">Velvety smooth red velvet layers with cream cheese frosting, adorned with white chocolate curls.</p>
+                    <div class="cake-details">
+                        <div class="detail">
+                            <span class="detail-label">Weight</span>
+                            <span class="detail-value">1 Kg</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Serves</span>
+                            <span class="detail-value">8-10</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Type</span>
+                            <span class="detail-value">Premium</span>
+                        </div>
+                    </div>
+                    <div class="cake-price">
+                        <span class="price">₹799</span>
+                        <span class="price-old">₹999</span>
+                    </div>
+                    <div class="cake-actions">
+                        <a href="#order" class="btn btn-primary btn-sm">Order Now</a>
+                        <button class="btn btn-outline btn-sm btn-360">View 360°</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cake 3 -->
+            <div class="cake-panel" data-cake="fruit">
+                <div class="cake-visual">
+                    <div class="cake-video-wrap">
+                        <video class="cake-vid" autoplay muted loop playsinline disablepictureinpicture controlsList="nodownload nofullscreen noremoteplayback">
+                            <source src="images/Fresh%20Fruit%20Cake/Ultra_realistic_360_degree_rotating_product_video__815907df33.mp4" type="video/mp4">
+                        </video>
+                        <div class="vid-shield"></div>
+                    </div>
+                    <div class="cake-glow green-glow"></div>
+                </div>
+                <div class="cake-info">
+                    <div class="cake-badge green">Fresh 🍓</div>
+                    <h3 class="cake-name">Fresh Fruit Cake</h3>
+                    <div class="cake-rating">
+                        <span class="stars">★★★★☆</span>
+                        <span class="rating-count">(74 reviews)</span>
+                    </div>
+                    <p class="cake-desc">Light sponge cake loaded with seasonal fresh fruits and whipped cream, a refreshing delight for all occasions.</p>
+                    <div class="cake-details">
+                        <div class="detail">
+                            <span class="detail-label">Weight</span>
+                            <span class="detail-value">1 Kg</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Serves</span>
+                            <span class="detail-value">8-10</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Type</span>
+                            <span class="detail-value">Eggless</span>
+                        </div>
+                    </div>
+                    <div class="cake-price">
+                        <span class="price">₹599</span>
+                        <span class="price-old">₹749</span>
+                    </div>
+                    <div class="cake-actions">
+                        <a href="#order" class="btn btn-primary btn-sm">Order Now</a>
+                        <button class="btn btn-outline btn-sm btn-360">View 360°</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cake 4 -->
+            <div class="cake-panel reverse" data-cake="birthday">
+                <div class="cake-visual">
+                    <div class="cake-video-wrap">
+                        <video class="cake-vid" autoplay muted loop playsinline disablepictureinpicture controlsList="nodownload nofullscreen noremoteplayback">
+                            <source src="images/Birthday%20Special%20Cake/Colorful_birthday_cake_rotating_00f8da4174.mp4" type="video/mp4">
+                        </video>
+                        <div class="vid-shield"></div>
+                    </div>
+                    <div class="cake-glow gold-glow"></div>
+                </div>
+                <div class="cake-info">
+                    <div class="cake-badge gold">Special 🎉</div>
+                    <h3 class="cake-name">Birthday Special Cake</h3>
+                    <div class="cake-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-count">(152 reviews)</span>
+                    </div>
+                    <p class="cake-desc">Celebrate in style with our signature birthday cake — colorful, delicious, and customizable with your message.</p>
+                    <div class="cake-details">
+                        <div class="detail">
+                            <span class="detail-label">Weight</span>
+                            <span class="detail-value">1.5 Kg</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Serves</span>
+                            <span class="detail-value">12-15</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Type</span>
+                            <span class="detail-value">Custom</span>
+                        </div>
+                    </div>
+                    <div class="cake-price">
+                        <span class="price">₹999</span>
+                        <span class="price-old">₹1,299</span>
+                    </div>
+                    <div class="cake-actions">
+                        <a href="#order" class="btn btn-primary btn-sm">Order Now</a>
+                        <button class="btn btn-outline btn-sm btn-360">View 360°</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cake 5 -->
+            <div class="cake-panel" data-cake="wedding">
+                <div class="cake-visual">
+                    <div class="cake-video-wrap">
+                        <video class="cake-vid" autoplay muted loop playsinline disablepictureinpicture controlsList="nodownload nofullscreen noremoteplayback">
+                            <source src="images/Custom%20Wedding%20Cake/Wedding_cake_rotating_in_studio_9a49f5091e.mp4" type="video/mp4">
+                        </video>
+                        <div class="vid-shield"></div>
+                    </div>
+                    <div class="cake-glow white-glow"></div>
+                </div>
+                <div class="cake-info">
+                    <div class="cake-badge white">Luxury 💍</div>
+                    <h3 class="cake-name">Custom Wedding Cake</h3>
+                    <div class="cake-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-count">(64 reviews)</span>
+                    </div>
+                    <p class="cake-desc">Elegant multi-tier wedding cake with fondant flowers, pearl details, and your choice of premium flavors.</p>
+                    <div class="cake-details">
+                        <div class="detail">
+                            <span class="detail-label">Weight</span>
+                            <span class="detail-value">3-5 Kg</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Serves</span>
+                            <span class="detail-value">30-50</span>
+                        </div>
+                        <div class="detail">
+                            <span class="detail-label">Type</span>
+                            <span class="detail-value">Luxury</span>
+                        </div>
+                    </div>
+                    <div class="cake-price">
+                        <span class="price">₹2,999</span>
+                        <span class="price-old">₹3,999</span>
+                    </div>
+                    <div class="cake-actions">
+                        <a href="#order" class="btn btn-primary btn-sm">Order Now</a>
+                        <button class="btn btn-outline btn-sm btn-360">View 360°</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 360° Cake Gallery -->
+    <section id="gallery360" class="gallery360-section">
+        <div class="section-header light">
+            <span class="section-tag">Interactive Experience</span>
+            <h2 class="section-title">360° Cake Gallery</h2>
+            <p class="section-desc">Drag to rotate. Explore every detail of our handcrafted cakes.</p>
+        </div>
+        <div class="gallery360-container">
+            <div class="gallery360-viewer">
+                <div class="cake-video-wrap gallery-vid-wrap">
+                    <video class="cake-vid gallery-active-vid" id="gallery360-video" src="images/Chocolate%20Truffle%20Cake/Flow_delpmaspu_.mp4" autoplay muted loop playsinline disablepictureinpicture controlsList="nodownload nofullscreen noremoteplayback"></video>
+                    <div class="vid-shield"></div>
+                </div>
+            </div>
+            <div class="gallery360-controls">
+                <button class="cake-select active" data-model="chocolate">
+                    <div class="cake-thumb choco-thumb"></div>
+                    <span>Chocolate</span>
+                </button>
+                <button class="cake-select" data-model="redvelvet">
+                    <div class="cake-thumb red-thumb"></div>
+                    <span>Red Velvet</span>
+                </button>
+                <button class="cake-select" data-model="fruit">
+                    <div class="cake-thumb fruit-thumb"></div>
+                    <span>Fruit</span>
+                </button>
+                <button class="cake-select" data-model="birthday">
+                    <div class="cake-thumb birthday-thumb"></div>
+                    <span>Birthday</span>
+                </button>
+                <button class="cake-select" data-model="wedding">
+                    <div class="cake-thumb wedding-thumb"></div>
+                    <span>Wedding</span>
+                </button>
+            </div>
+            <div class="drag-hint">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h-4v16h4M4 12h16"/></svg>
+                <span>360° Rotating View</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cake Customization -->
+    <section id="customize" class="customize-section">
+        <div class="section-header">
+            <span class="section-tag">Design Your Cake</span>
+            <h2 class="section-title">Cake Customization</h2>
+            <p class="section-desc">Create your perfect cake with our interactive customizer.</p>
+        </div>
+        <div class="customize-container">
+            <div class="customize-preview" id="customize-canvas">
+                <div class="cake-3d-frame customizer-frame">
+                    <div class="frame-glow customizer-glow" id="customizeGlow"></div>
+                    <canvas id="customizerCakeCanvas"></canvas>
+                    <div class="frame-label dark">
+                        <span class="frame-label-dot"></span>
+                        Customize &bull; Drag to Rotate
+                    </div>
+                    <!-- Message overlay on canvas -->
+                    <div class="cake-msg-overlay" id="cakeMsgPlate"></div>
+                </div>
+            </div>
+            <div class="customize-options">
+                <div class="option-group">
+                    <h4 class="option-title">Cake Size</h4>
+                    <div class="option-buttons">
+                        <button class="opt-btn active" data-size="500g">500g</button>
+                        <button class="opt-btn" data-size="1kg">1 Kg</button>
+                        <button class="opt-btn" data-size="2kg">2 Kg</button>
+                    </div>
+                </div>
+                <div class="option-group">
+                    <h4 class="option-title">Flavor</h4>
+                    <div class="option-buttons flavor-buttons">
+                        <button class="opt-btn flavor-btn active" data-flavor="chocolate" style="--flavor-color: #4a2c2a">
+                            <span class="color-dot" style="background: #4a2c2a"></span> Chocolate
+                        </button>
+                        <button class="opt-btn flavor-btn" data-flavor="vanilla" style="--flavor-color: #f5e6c8">
+                            <span class="color-dot" style="background: #f5e6c8"></span> Vanilla
+                        </button>
+                        <button class="opt-btn flavor-btn" data-flavor="strawberry" style="--flavor-color: #e8567f">
+                            <span class="color-dot" style="background: #e8567f"></span> Strawberry
+                        </button>
+                        <button class="opt-btn flavor-btn" data-flavor="butterscotch" style="--flavor-color: #d4a041">
+                            <span class="color-dot" style="background: #d4a041"></span> Butterscotch
+                        </button>
+                    </div>
+                </div>
+                <div class="option-group">
+                    <h4 class="option-title">Message on Cake</h4>
+                    <input type="text" class="cake-message-input" id="cakeMessage" placeholder="e.g. Happy Birthday!" maxlength="30">
+                </div>
+                <div class="option-group">
+                    <h4 class="option-title">Color Theme</h4>
+                    <div class="color-options">
+                        <button class="color-btn active" data-color="#e8567f" style="background: #e8567f"></button>
+                        <button class="color-btn" data-color="#6c5ce7" style="background: #6c5ce7"></button>
+                        <button class="color-btn" data-color="#00b894" style="background: #00b894"></button>
+                        <button class="color-btn" data-color="#fdcb6e" style="background: #fdcb6e"></button>
+                        <button class="color-btn" data-color="#74b9ff" style="background: #74b9ff"></button>
+                        <button class="color-btn" data-color="#ffffff" style="background: #ffffff; border: 2px solid #ddd"></button>
+                    </div>
+                </div>
+                <div class="customize-summary">
+                    <div class="summary-price">
+                        <span>Total:</span>
+                        <span class="total-price" id="totalPrice">₹699</span>
+                    </div>
+                    <a href="#order" class="btn btn-primary">Order This Cake</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Bakery Story -->
+    <section id="about" class="about-section">
+        <div class="about-bg-elements">
+            <div class="floating-pastry pastry-1">🧁</div>
+            <div class="floating-pastry pastry-2">🍩</div>
+            <div class="floating-pastry pastry-3">🎂</div>
+            <div class="floating-pastry pastry-4">🍰</div>
+            <div class="floating-pastry pastry-5">🥐</div>
+        </div>
+        <div class="about-container">
+            <div class="about-visual">
+                <div class="about-image-stack">
+                    <div class="about-img about-img-1">
+                        <div class="img-placeholder">
+                            <span>🎂</span>
+                            <p>Our Kitchen</p>
+                        </div>
+                    </div>
+                    <div class="about-img about-img-2">
+                        <div class="img-placeholder">
+                            <span>👨‍🍳</span>
+                            <p>Master Baker</p>
+                        </div>
+                    </div>
+                    <div class="experience-badge">
+                        <span class="exp-number">5+</span>
+                        <span class="exp-text">Years of<br>Excellence</span>
+                    </div>
+                </div>
+            </div>
+            <div class="about-content">
+                <span class="section-tag">Our Story</span>
+                <h2 class="section-title left-align">About Our Bakery</h2>
+                <p class="about-text">We believe every cake tells a story. At our bakery, we pour our hearts into every creation — from the finest ingredients to the most intricate decorations.</p>
+                <div class="about-features">
+                    <div class="feature">
+                        <div class="feature-icon">🌾</div>
+                        <div>
+                            <h4>Premium Ingredients</h4>
+                            <p>Only the finest, freshest ingredients make it into our kitchen.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎨</div>
+                        <div>
+                            <h4>Custom Designs</h4>
+                            <p>Every cake is a unique masterpiece tailored to your vision.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🚚</div>
+                        <div>
+                            <h4>Fresh Daily Delivery</h4>
+                            <p>Baked fresh and delivered right to your doorstep.</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">💖</div>
+                        <div>
+                            <h4>Made With Love</h4>
+                            <p>Trusted by hundreds of happy customers across the city.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <div class="section-header">
+            <span class="section-tag">Our Creations</span>
+            <h2 class="section-title">Gallery</h2>
+            <p class="section-desc">A glimpse into our world of sweet perfection.</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item large">
+                <div class="gallery-placeholder" style="background: linear-gradient(135deg, #4a2c2a, #8B4513)">
+                    <span>🎂</span>
+                    <p>Chocolate Cakes</p>
+                </div>
+                <div class="gallery-overlay">
+                    <h4>Chocolate Collection</h4>
+                    <p>Our finest chocolate creations</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder" style="background: linear-gradient(135deg, #c0392b, #e74c3c)">
+                    <span>🍰</span>
+                    <p>Red Velvet</p>
+                </div>
+                <div class="gallery-overlay">
+                    <h4>Red Velvet</h4>
+                    <p>Classic elegance</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder" style="background: linear-gradient(135deg, #f39c12, #fdcb6e)">
+                    <span>🧁</span>
+                    <p>Cupcakes</p>
+                </div>
+                <div class="gallery-overlay">
+                    <h4>Cupcakes</h4>
+                    <p>Mini delights</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder" style="background: linear-gradient(135deg, #e8567f, #fd79a8)">
+                    <span>🎀</span>
+                    <p>Birthday Cakes</p>
+                </div>
+                <div class="gallery-overlay">
+                    <h4>Birthday Special</h4>
+                    <p>Make it memorable</p>
+                </div>
+            </div>
+            <div class="gallery-item large">
+                <div class="gallery-placeholder" style="background: linear-gradient(135deg, #dfe6e9, #b2bec3)">
+                    <span>💍</span>
+                    <p>Wedding Cakes</p>
+                </div>
+                <div class="gallery-overlay">
+                    <h4>Wedding Cakes</h4>
+                    <p>Elegant luxury tiers</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder" style="background: linear-gradient(135deg, #00b894, #55efc4)">
+                    <span>🍓</span>
+                    <p>Fruit Cakes</p>
+                </div>
+                <div class="gallery-overlay">
+                    <h4>Fruit Fresh</h4>
+                    <p>Nature's sweetness</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-placeholder" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe)">
+                    <span>🍩</span>
+                    <p>Pastries</p>
+                </div>
+                <div class="gallery-overlay">
+                    <h4>Pastries</h4>
+                    <p>Flaky & delicious</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="reviews-section">
+        <div class="section-header light">
+            <span class="section-tag">Testimonials</span>
+            <h2 class="section-title">What Our Customers Say</h2>
+            <p class="section-desc">Real reviews from our happy cake lovers.</p>
+        </div>
+        <div class="reviews-container">
+            <div class="review-track" id="reviewTrack">
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"Best cakes in the city! The chocolate truffle was absolutely divine. Will order again for sure!"</p>
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">RS</div>
+                        <div>
+                            <h4>Rahul Sharma</h4>
+                            <span>Regular Customer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"Ordered a custom wedding cake and it was beyond our expectations. Beautiful and delicious!"</p>
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">PG</div>
+                        <div>
+                            <h4>Priya Gupta</h4>
+                            <span>Wedding Order</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"The birthday cake for my daughter was magical! She loved the unicorn design. Thank you so much!"</p>
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">AK</div>
+                        <div>
+                            <h4>Amit Kumar</h4>
+                            <span>Birthday Order</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"Fresh, delicious, and beautifully decorated. Their red velvet is to die for. Highly recommended!"</p>
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">SM</div>
+                        <div>
+                            <h4>Sneha Mishra</h4>
+                            <span>Regular Customer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"The fruit cake was so fresh and light! Perfect for my mom's anniversary. Great quality and service."</p>
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">VT</div>
+                        <div>
+                            <h4>Vikash Tiwari</h4>
+                            <span>Anniversary Order</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"I love how they customized the cake exactly as I wanted. The 3D design was amazing. 10/10!"</p>
+                    <div class="reviewer">
+                        <div class="reviewer-avatar">NK</div>
+                        <div>
+                            <h4>Neha Kapoor</h4>
+                            <span>Custom Order</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Section -->
+    <section id="order" class="order-section">
+        <div class="order-container">
+            <div class="order-info">
+                <span class="section-tag">Place Your Order</span>
+                <h2 class="section-title left-align">Order Your Dream Cake</h2>
+                <p class="order-desc">Fill in the details and we'll prepare something special just for you. You can also reach us directly on WhatsApp!</p>
+                <div class="order-features">
+                    <div class="order-feature">
+                        <span>🕐</span>
+                        <div>
+                            <h4>Same Day Delivery</h4>
+                            <p>Order before 2 PM for same day delivery</p>
+                        </div>
+                    </div>
+                    <div class="order-feature">
+                        <span>💰</span>
+                        <div>
+                            <h4>Best Prices</h4>
+                            <p>Premium quality at affordable prices</p>
+                        </div>
+                    </div>
+                    <div class="order-feature">
+                        <span>🎁</span>
+                        <div>
+                            <h4>Free Decorations</h4>
+                            <p>Complimentary cake toppers & candles</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="order-form-container">
+                <form id="orderForm" class="order-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <input type="text" placeholder="Enter your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" placeholder="+91 98765 43210" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Cake Type</label>
+                            <select required>
+                                <option value="">Select cake type</option>
+                                <option>Chocolate Truffle</option>
+                                <option>Red Velvet</option>
+                                <option>Fresh Fruit</option>
+                                <option>Birthday Special</option>
+                                <option>Wedding Cake</option>
+                                <option>Butterscotch</option>
+                                <option>Black Forest</option>
+                                <option>Custom Design</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Weight</label>
+                            <select required>
+                                <option value="">Select weight</option>
+                                <option>500g</option>
+                                <option>1 Kg</option>
+                                <option>1.5 Kg</option>
+                                <option>2 Kg</option>
+                                <option>3 Kg</option>
+                                <option>5 Kg</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Delivery Date</label>
+                        <input type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Message on Cake (optional)</label>
+                        <input type="text" placeholder="e.g. Happy Birthday!">
+                    </div>
+                    <div class="form-group">
+                        <label>Special Instructions</label>
+                        <textarea rows="3" placeholder="Any special requests or notes..."></textarea>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span>🎂 Place Order</span>
+                        </button>
+                        <a href="https://wa.me/919876543210?text=Hi%20Demo%20Bakery!%20I%20want%20to%20order%20a%20cake." class="btn btn-whatsapp btn-full" target="_blank">
+                            <span>📱 Order via WhatsApp</span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section id="location" class="location-section">
+        <div class="section-header">
+            <span class="section-tag">Find Us</span>
+            <h2 class="section-title">Visit Our Bakery</h2>
+        </div>
+        <div class="location-container">
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.5894562498584!2d77.2193635!3d28.5931169!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce2a99b5a4521%3A0x3135a7f85a34baf4!2sLodhi%20Garden!5e0!3m2!1sen!2sin!4v1709900000000" 
+                    width="100%" height="400" style="border:0; border-radius: 20px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="location-info">
+                <div class="loc-card">
+                    <span class="loc-icon">📍</span>
+                    <div>
+                        <h4>Address</h4>
+                        <p>Demo Bakery, Near Lodhi Garden, New Delhi, India</p>
+                    </div>
+                </div>
+                <div class="loc-card">
+                    <span class="loc-icon">📞</span>
+                    <div>
+                        <h4>Phone</h4>
+                        <p>+91 98765 43210</p>
+                    </div>
+                </div>
+                <div class="loc-card">
+                    <span class="loc-icon">🕐</span>
+                    <div>
+                        <h4>Opening Hours</h4>
+                        <p>Mon - Sun: 9:00 AM - 9:00 PM</p>
+                    </div>
+                </div>
+                <a href="https://maps.google.com/maps?q=Lodhi+Garden+New+Delhi" class="btn btn-primary" target="_blank">
+                    <span>Get Directions</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-wave">
+            <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 50L48 45C96 40 192 30 288 35C384 40 480 60 576 65C672 70 768 60 864 50C960 40 1056 30 1152 35C1248 40 1344 60 1392 70L1440 80V100H1392C1344 100 1248 100 1152 100C1056 100 960 100 864 100C768 100 672 100 576 100C480 100 384 100 288 100C192 100 96 100 48 100H0V50Z" fill="currentColor"/>
+            </svg>
+        </div>
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <span class="logo-icon">🎂</span>
+                        <span class="logo-text">Demo <span class="accent">Bakery Shop</span></span>
+                    </a>
+                    <p>Fresh cakes made with love. Premium artisan bakery serving the city with the finest handcrafted cakes and pastries.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="WhatsApp">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#cakes">Our Cakes</a></li>
+                        <li><a href="#customize">Customize</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#order">Order Now</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Cake Types</h4>
+                    <ul>
+                        <li><a href="#cakes">Chocolate Cakes</a></li>
+                        <li><a href="#cakes">Red Velvet</a></li>
+                        <li><a href="#cakes">Fruit Cakes</a></li>
+                        <li><a href="#cakes">Birthday Cakes</a></li>
+                        <li><a href="#cakes">Wedding Cakes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li>📍 Near Lodhi Garden, New Delhi</li>
+                        <li>📞 +91 98765 43210</li>
+                        <li>📧 demo@bakeryshop.com</li>
+                        <li>🕐 9:00 AM - 9:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Demo Bakery Shop. All Rights Reserved. Made with 🤍 & 🎂</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts via CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/three-scene.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
